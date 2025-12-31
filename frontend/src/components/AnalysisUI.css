@@ -1,0 +1,58 @@
+@import "tailwindcss";
+
+.ui-html-wrapper {
+  perspective: 1200px;
+}
+
+.glass-card-3d {
+  @apply relative w-137.5 p-12 rounded-[3.5rem] text-white;
+  background: radial-gradient(circle at top left, rgba(255, 255, 255, 0.05), transparent);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(15px);
+  box-shadow: 0 0 100px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(255, 255, 255, 0.03);
+  transform-style: preserve-3d;
+}
+
+.title-3d {
+  @apply text-5xl font-black italic tracking-tighter uppercase mb-2;
+  text-shadow: 0 0 30px rgba(255, 255, 255, 0.4);
+}
+
+.title-underline {
+  @apply h-0.5 w-24 bg-cyan-400 mb-8;
+  box-shadow: 0 0 10px rgba(34, 211, 238, 0.8);
+}
+
+.summary-scroll-3d {
+  @apply max-h-40 overflow-y-auto mb-10 pr-4 text-slate-300;
+  scrollbar-width: none;
+}
+
+.summary-text {
+  @apply text-lg font-mono leading-relaxed italic;
+}
+
+.input-row-3d {
+  @apply flex items-center gap-4 bg-white/5 p-1 rounded-full border border-white/10;
+}
+
+.input-3d {
+  @apply flex-1 bg-transparent px-6 py-4 text-white placeholder-slate-600 focus:outline-none text-xs font-mono;
+}
+
+.button-3d {
+  @apply bg-white text-slate-950 font-black px-10 py-3 rounded-full transition-all;
+  @apply hover:bg-cyan-400 hover:scale-105 active:scale-95 text-[10px] tracking-widest;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+.holo-border {
+  @apply absolute -inset-0.5 rounded-[3.5rem] -z-10 opacity-20;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+  animation: scan-line 3s linear infinite;
+}
+
+@keyframes scan-line {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}

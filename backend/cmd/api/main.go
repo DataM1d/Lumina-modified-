@@ -3,21 +3,33 @@ package main
 import (
 	"context"
 	"fmt"
-	"log"
 	"net/http"
 	"os"
 
 	"github.com/DataM1d/lumina-backend/internal/ai"
 	"github.com/DataM1d/lumina-backend/internal/scraper"
+
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 )
 
-func main() {
-	err := godotenv.Load()
-	if err != nil {
-		log.Println("Note: .env file not found, using system environment")
+func CORSMiddleware() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+		c.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
+		c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With")
+		c.Writer.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS, GET, PUT")
+
+		if c.Request.Method == "OPTIONS" {
+			c.AbortWithStatus(204)
+			return
+		}
+		c.Next()
 	}
+}
+
+func main() {
+	_ = godotenv.Load()
 
 	port := os.Getenv("PORT")
 	if port == "" {
@@ -25,9 +37,13 @@ func main() {
 	}
 
 	r := gin.Default()
+	r.Use(CORSMiddleware())
 
 	r.GET("/ping", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{"message": "Lumina Backend is Running"})
+		c.JSON(http.StatusOK, gin.H{
+			"status":  "online",
+			"message": "Lumina Core Engine Active",
+		})
 	})
 
 	r.POST("/process", func(c *gin.Context) {
@@ -42,7 +58,7 @@ func main() {
 
 		text, err := scraper.ScrapeArticle(input.URL)
 		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to scrape article"})
+			c.JSON(http.StatusUnprocessableEntity, gin.H{"error": "Scraping failed: " + err.Error()})
 			return
 		}
 
@@ -59,6 +75,8 @@ func main() {
 		})
 	})
 
-	fmt.Printf("Server starting on port %s...\n", port)
-	r.Run(":" + port)
+	fmt.Printf("--- Lumina Backend Initialized on Port %s ---\n", port)
+	if err := r.Run(":" + port); err != nil {
+		fmt.Printf("Critical Server Error: %v\n", err)
+	}
 }

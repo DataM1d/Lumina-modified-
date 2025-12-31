@@ -1,0 +1,5 @@
+@import "tailwindcss";
+
+.canvas-container {
+  @apply absolute inset-0 z-0 w-full h-full;
+}
