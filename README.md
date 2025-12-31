@@ -60,10 +60,11 @@ https://en.wikipedia.org/wiki/Semiconductor
 
 
 💡 Local Setup
-Backend: Create a .env file in the root, add your GEMINI_API_KEY, and run:
-
+Backend: 
+Create a .env file in the root, add your GEMINI_API_KEY, and run,
 go run ./cmd/api
-Frontend: Navigate to your frontend directory and run:
 
+Frontend: 
+Navigate to your frontend directory and run,
 npm install
 npm run dev
