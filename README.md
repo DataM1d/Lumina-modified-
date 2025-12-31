@@ -60,6 +60,7 @@ https://en.wikipedia.org/wiki/Semiconductor
 
 
 💡 Local Setup
+
 Backend: 
 Create a .env file in the root, add your GEMINI_API_KEY, and run,
 go run ./cmd/api
