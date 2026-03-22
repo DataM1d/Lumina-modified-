@@ -3,11 +3,13 @@ package models
 import "time"
 
 type Analysis struct {
-	Headline    string    `json:"headline"`
-	Summary     string    `json:"summary"`
-	Sentiment   float64   `json:"sentiment"`
-	VisualStyle string    `json:"visual_style"`
-	ProcessedAt time.Time `json:"processed_at"`
+	ID          int64     `json:"id" db:"id"`
+	URL         string    `json:"url" db:"url"`
+	Headline    string    `json:"headline" db:"headline"`
+	Summary     string    `json:"summary" db:"summary"`
+	Sentiment   float64   `json:"sentiment" db:"sentiment"`
+	VisualStyle string    `json:"visual_style" db:"visual_style"`
+	ProcessedAt time.Time `json:"processed_at" db:"processed_at"`
 }
 
 type Article struct {
