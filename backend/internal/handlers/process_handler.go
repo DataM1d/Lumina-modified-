@@ -54,3 +54,15 @@ func (h *ProcessHandler) HandleAnalyze(c *gin.Context) {
 		},
 	})
 }
+
+func (h *ProcessHandler) HandleHistory(c *gin.Context) {
+	history, err := h.Svc.Repo.GetAll(c.Request.Context(), 10)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Could not fetch history"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"history": history,
+	})
+}
